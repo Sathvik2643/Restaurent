@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard</title>
+  <title>Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="css/admin.css">
 
-  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -18,32 +16,14 @@
   <button onclick="logout()">Logout</button>
 </header>
 
-<div class="container">
+<h3>Users</h3>
+<ul id="userList"></ul>
 
-  <!-- WAITERS -->
-  <section>
-    <h3>Waiters</h3>
-    <input id="waiterName" placeholder="Waiter name">
-    <button onclick="addWaiter()">Add Waiter</button>
-    <ul id="waiterList"></ul>
-  </section>
-
-  <!-- MENU -->
-  <section>
-    <h3>Menu Items</h3>
-    <input id="menuName" placeholder="Item name">
-    <input id="menuPrice" type="number" placeholder="Price">
-    <button onclick="addMenu()">Add Item</button>
-    <ul id="menuList"></ul>
-  </section>
-
-  <!-- ORDERS -->
-  <section class="orders">
-    <h3>Orders</h3>
-    <div id="ordersList"></div>
-  </section>
-
-</div>
+<h3>Menu</h3>
+<input id="item" placeholder="Item">
+<input id="price" placeholder="Price">
+<button onclick="addMenu()">Add</button>
+<ul id="menuList"></ul>
 
 <script src="js/firebase.js"></script>
 <script src="js/admin.js"></script>
