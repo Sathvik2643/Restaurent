@@ -1,76 +1,43 @@
-/* 🔐 AUTH GUARD */
-firebase.auth().onAuthStateChanged(user => {
-  if (!user) window.location.href = "index.html";
+auth.onAuthStateChanged(user => {
+  if (!user) location.href = "index.html";
+  else checkAdmin(user.uid);
 });
 
-/* 🚪 LOGOUT */
+function checkAdmin(uid) {
+  db.ref("users/" + uid).once("value", snap => {
+    if (snap.val().role !== "admin") location.href = "index.html";
+  });
+}
+
 function logout() {
-  firebase.auth().signOut();
-  window.location.href = "index.html";
+  auth.signOut();
+  location.href = "index.html";
 }
 
-/* 👨‍🍳 WAITERS */
-function addWaiter() {
-  const name = document.getElementById("waiterName").value;
-  if (!name) return;
+db.ref("users").on("value", snap => {
+  userList.innerHTML = "";
+  snap.forEach(u => {
+    const user = u.val();
+    if (user.role === "admin") return;
 
-  db.ref("waiters").push({ name, active: true });
-  document.getElementById("waiterName").value = "";
-}
-
-db.ref("waiters").on("value", snap => {
-  const ul = document.getElementById("waiterList");
-  ul.innerHTML = "";
-  snap.forEach(w => {
-    ul.innerHTML += `
-      <li>${w.val().name}
-        <button onclick="removeWaiter('${w.key}')">❌</button>
+    userList.innerHTML += `
+      <li>
+        ${user.name}
+        <select onchange="changeRole('${u.key}',this.value)">
+          <option value="waiter" ${user.role==="waiter"?"selected":""}>Waiter</option>
+          <option value="kitchen" ${user.role==="kitchen"?"selected":""}>Kitchen</option>
+        </select>
       </li>`;
   });
 });
 
-function removeWaiter(id) {
-  db.ref("waiters/" + id).remove();
+function changeRole(uid, role) {
+  db.ref("users/" + uid + "/role").set(role);
 }
 
-/* 🍽 MENU */
 function addMenu() {
-  const name = document.getElementById("menuName").value;
-  const price = document.getElementById("menuPrice").value;
-  if (!name || !price) return;
-
-  db.ref("menu").push({ name, price });
-  document.getElementById("menuName").value = "";
-  document.getElementById("menuPrice").value = "";
-}
-
-db.ref("menu").on("value", snap => {
-  const ul = document.getElementById("menuList");
-  ul.innerHTML = "";
-  snap.forEach(m => {
-    ul.innerHTML += `
-      <li>${m.val().name} - ₹${m.val().price}
-        <button onclick="removeMenu('${m.key}')">❌</button>
-      </li>`;
+  db.ref("menu").push({
+    name: item.value,
+    price: Number(price.value)
   });
-});
-
-function removeMenu(id) {
-  db.ref("menu/" + id).remove();
 }
-
-/* 📊 ORDERS */
-db.ref("orders").on("value", snap => {
-  const div = document.getElementById("ordersList");
-  div.innerHTML = "";
-
-  snap.forEach(o => {
-    const order = o.val();
-    div.innerHTML += `
-      <div style="margin-bottom:10px">
-        <b>Table ${order.table}</b><br>
-        Status: ${order.status}<br>
-        Items: ${order.items.map(i => i.name).join(", ")}
-      </div>`;
-  });
-});
