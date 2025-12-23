@@ -26,15 +26,15 @@ function verifyOTP() {
   confirmationResult.confirm(otp).then(res => {
     currentUserUID = res.user.uid;
 
-    db.ref("users/" + currentUserUID).once("value", snap => {
-      if (snap.exists()) {
-        // existing user
-        window.location.href = "waiter.html";
-      } else {
-        // new user
-        document.getElementById("registerSection").style.display = "block";
-      }
-    });
+   db.ref("users/" + currentUserUID).once("value", snap => {
+  if (!snap.exists()) {
+    // First time user → register as waiter
+    document.getElementById("registerSection").style.display = "block";
+  } else {
+    redirectByRole(snap.val().role);
+  }
+});
+
   }).catch(err => alert("Invalid OTP"));
 }
 
