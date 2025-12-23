@@ -1,6 +1,7 @@
 let confirmationResult;
 let currentUID;
 
+/* reCAPTCHA */
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
   'recaptcha',
   { size: 'invisible' }
@@ -8,36 +9,52 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
 
 function sendOTP() {
   const phone = document.getElementById("phone").value;
+
+  if (!phone) {
+    alert("Enter phone number");
+    return;
+  }
+
   auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
-    .then(res => {
-      confirmationResult = res;
-      document.getElementById("otpBox").style.display = "block";
+    .then(result => {
+      confirmationResult = result;
+      document.getElementById("otpSection").classList.remove("hidden");
+      document.getElementById("sendOtpBtn").disabled = true;
     })
-    .catch(err => alert(err.message));
+    .catch(err => {
+      alert(err.message);
+    });
 }
 
 function verifyOTP() {
   const otp = document.getElementById("otp").value;
 
-  confirmationResult.confirm(otp).then(res => {
-    currentUID = res.user.uid;
+  confirmationResult.confirm(otp)
+    .then(res => {
+      currentUID = res.user.uid;
 
-    db.ref("users/" + currentUID).once("value", snap => {
-      if (!snap.exists()) {
-        document.getElementById("regBox").style.display = "block";
-      } else {
-        redirectByRole(snap.val().role);
-      }
-    });
-  }).catch(() => alert("Invalid OTP"));
+      db.ref("users/" + currentUID).once("value", snap => {
+        if (snap.exists()) {
+          redirectByRole(snap.val().role);
+        } else {
+          document.getElementById("registerSection").classList.remove("hidden");
+        }
+      });
+    })
+    .catch(() => alert("Invalid OTP"));
 }
 
 function registerUser() {
   const name = document.getElementById("name").value;
 
+  if (!name) {
+    alert("Enter your name");
+    return;
+  }
+
   db.ref("users/" + currentUID).set({
     name,
-    role: "waiter",      // 🔒 ALWAYS DEFAULT
+    role: "waiter",
     active: true
   });
 
