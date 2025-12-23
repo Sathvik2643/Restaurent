@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+}
+
+header {
+  background: #000;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  border-bottom: 2px solid #444;
+}
+
+main {
+  padding: 15px;
+  display: grid;
+  gap: 15px;
+}
+
+/* Order Card */
+.order-card {
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 6px solid orange;
+}
+
+.order-card.ready {
+  border-left-color: green;
+}
+
+.order-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+}
+
+.items {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.cook {
+  background: orange;
+}
+
+.ready {
+  background: green;
+  color: white;
+}
+
+/* Desktop / TV layout */
+@media (min-width: 900px) {
+  main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
