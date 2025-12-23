@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurant Counter</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+
+<h2>Order Panel</h2>
+
+<input id="table" placeholder="Table No">
+<input id="waiter" placeholder="Waiter Name">
+
+<hr>
+
+<input id="item" placeholder="Item Name">
+<input id="price" type="number" placeholder="Price">
+<input id="qty" type="number" placeholder="Qty" value="1">
+
+<button onclick="addItem()">Add Item</button>
+
+<ul id="orderList"></ul>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<button class="send" onclick="sendToKitchen()">Send to Kitchen</button>
+
+<hr>
+
+<h2>Live Order Status</h2>
+<ul id="liveOrders"></ul>
+
+<script src="script.js"></script>
+</body>
+</html>
