@@ -1,5 +1,3 @@
-// js/firebase.js
-
 const firebaseConfig = {
   apiKey: "PASTE_API_KEY",
   authDomain: "PASTE_AUTH_DOMAIN",
