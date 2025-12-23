@@ -3,31 +3,48 @@
 <head>
   <title>Restaurant Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="css/main.css">
 
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
 
-<div class="login-card">
-  <h2>Login</h2>
+<div class="login-container">
 
-  <input id="phone" placeholder="+91XXXXXXXXXX">
-  <button onclick="sendOTP()">Send OTP</button>
+  <h2>Restaurant Login</h2>
 
-  <div id="otpBox" style="display:none">
-    <input id="otp" placeholder="Enter OTP">
-    <button onclick="verifyOTP()">Verify OTP</button>
+  <!-- PHONE -->
+  <div class="field">
+    <label>Phone Number</label>
+    <input id="phone" placeholder="+91XXXXXXXXXX">
   </div>
 
-  <div id="regBox" style="display:none">
-    <input id="name" placeholder="Your Name">
-    <button onclick="registerUser()">Register</button>
+  <button id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+
+  <!-- OTP -->
+  <div id="otpSection" class="hidden">
+    <div class="field">
+      <label>Enter OTP</label>
+      <input id="otp" placeholder="6-digit OTP">
+    </div>
+    <button onclick="verifyOTP()">Verify & Login</button>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="registerSection" class="hidden">
+    <div class="field">
+      <label>Your Name</label>
+      <input id="name" placeholder="Enter your name">
+    </div>
+    <button onclick="registerUser()">Complete Registration</button>
   </div>
 
   <div id="recaptcha"></div>
+
 </div>
 
 <script src="js/firebase.js"></script>
