@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Restaurant Counter</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Restaurant Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/main.css">
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
 
-<h2>Order Panel</h2>
+<div class="login-card">
+  <h2>Waiter Login</h2>
 
-<input id="table" placeholder="Table No">
-<input id="waiter" placeholder="Waiter Name">
+  <input id="phone" placeholder="+91XXXXXXXXXX">
+  <button onclick="sendOTP()">Send OTP</button>
 
-<hr>
+  <div id="otpSection" style="display:none">
+    <input id="otp" placeholder="Enter OTP">
+    <button onclick="verifyOTP()">Verify OTP</button>
+  </div>
 
-<input id="item" placeholder="Item Name">
-<input id="price" type="number" placeholder="Price">
-<input id="qty" type="number" placeholder="Qty" value="1">
+  <div id="registerSection" style="display:none">
+    <input id="name" placeholder="Your Name">
+    <button onclick="completeRegister()">Complete Registration</button>
+  </div>
 
-<button onclick="addItem()">Add Item</button>
+  <div id="recaptcha"></div>
+</div>
 
-<ul id="orderList"></ul>
-
-<h3>Total: ₹<span id="total">0</span></h3>
-
-<button class="send" onclick="sendToKitchen()">Send to Kitchen</button>
-
-<hr>
-
-<h2>Live Order Status</h2>
-<ul id="liveOrders"></ul>
-
-<script src="script.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>
