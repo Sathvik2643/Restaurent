@@ -3,10 +3,8 @@
 <head>
   <title>Restaurant Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="css/main.css">
 
-  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -14,19 +12,19 @@
 <body>
 
 <div class="login-card">
-  <h2>Waiter Login</h2>
+  <h2>Login</h2>
 
   <input id="phone" placeholder="+91XXXXXXXXXX">
   <button onclick="sendOTP()">Send OTP</button>
 
-  <div id="otpSection" style="display:none">
+  <div id="otpBox" style="display:none">
     <input id="otp" placeholder="Enter OTP">
     <button onclick="verifyOTP()">Verify OTP</button>
   </div>
 
-  <div id="registerSection" style="display:none">
+  <div id="regBox" style="display:none">
     <input id="name" placeholder="Your Name">
-    <button onclick="completeRegister()">Complete Registration</button>
+    <button onclick="registerUser()">Register</button>
   </div>
 
   <div id="recaptcha"></div>
