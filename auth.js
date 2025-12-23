@@ -1,9 +1,6 @@
-// js/auth.js
-
 let confirmationResult;
-let currentUserUID = null;
+let currentUID;
 
-// reCAPTCHA
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
   'recaptcha',
   { size: 'invisible' }
@@ -11,11 +8,10 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
 
 function sendOTP() {
   const phone = document.getElementById("phone").value;
-
   auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
-    .then(result => {
-      confirmationResult = result;
-      document.getElementById("otpSection").style.display = "block";
+    .then(res => {
+      confirmationResult = res;
+      document.getElementById("otpBox").style.display = "block";
     })
     .catch(err => alert(err.message));
 }
@@ -24,29 +20,32 @@ function verifyOTP() {
   const otp = document.getElementById("otp").value;
 
   confirmationResult.confirm(otp).then(res => {
-    currentUserUID = res.user.uid;
+    currentUID = res.user.uid;
 
-   db.ref("users/" + currentUserUID).once("value", snap => {
-  if (!snap.exists()) {
-    // First time user → register as waiter
-    document.getElementById("registerSection").style.display = "block";
-  } else {
-    redirectByRole(snap.val().role);
-  }
-});
-
-  }).catch(err => alert("Invalid OTP"));
+    db.ref("users/" + currentUID).once("value", snap => {
+      if (!snap.exists()) {
+        document.getElementById("regBox").style.display = "block";
+      } else {
+        redirectByRole(snap.val().role);
+      }
+    });
+  }).catch(() => alert("Invalid OTP"));
 }
 
-function completeRegister() {
+function registerUser() {
   const name = document.getElementById("name").value;
 
-  db.ref("users/" + currentUserUID).set({
-    name: name,
-    role: "waiter",
-    active: true,
-    createdAt: new Date().toISOString()
+  db.ref("users/" + currentUID).set({
+    name,
+    role: "waiter",      // 🔒 ALWAYS DEFAULT
+    active: true
   });
 
   window.location.href = "waiter.html";
+}
+
+function redirectByRole(role) {
+  if (role === "admin") location.href = "admin.html";
+  else if (role === "kitchen") location.href = "kitchen.html";
+  else location.href = "waiter.html";
 }
