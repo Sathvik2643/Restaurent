@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kitchen Screen</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kitchen Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/kitchen.css">
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -10,14 +12,13 @@
 </head>
 <body>
 
-<h2>Kitchen Orders</h2>
+<header>
+  <h2>Kitchen Orders</h2>
+</header>
 
-<ul id="kitchenOrders"></ul>
+<main id="ordersContainer"></main>
 
-<script src="script.js"></script>
-<script>
-  loadKitchen();
-</script>
-
+<script src="js/firebase.js"></script>
+<script src="js/kitchen.js"></script>
 </body>
 </html>
