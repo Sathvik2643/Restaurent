@@ -5,11 +5,12 @@ const firebaseConfig = {
   projectId: "restaurent-2643",
   storageBucket: "restaurent-2643.firebasestorage.app",
   messagingSenderId: "199318631048",
-  appId: "1:199318631048:web:ebd6114b7110159043a53d",
-  measurementId: "G-T5T11XBEDG"
+  appId: "1:199318631048:web:ebd6114b7110159043a53d"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const db = firebase.database();
+// 🔥 MAKE GLOBAL (IMPORTANT)
+window.auth = firebase.auth();
+window.db = firebase.database();
